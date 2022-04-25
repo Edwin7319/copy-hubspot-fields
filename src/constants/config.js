@@ -1,6 +1,6 @@
-const API_KEY_PRINCIPAL = '7fc2dd20-393d-4728-b1c1-3aae393b4694'
+const API_KEY_PRINCIPAL = '7fc2dd20-393d-4728-b1c1-3aae393b4694' // 7fc2dd20-393d-4728-b1c1-3aae393b4694
 
-const API_KEY_SECONDARY = '44388f65-ac1a-4cf9-b523-bf5599ee49f3'
+const API_KEY_SECONDARY = '5d3d5c16-f1c1-4f9f-b8c2-33cb4cb46c40'
 
 module.exports = {
     API_KEY_PRINCIPAL,
