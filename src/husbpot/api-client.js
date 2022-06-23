@@ -75,7 +75,7 @@ const createProperties = async (hubspotClient, objectType, properties) => {
     )
 }
 
-const createPipelines = async (hubspotClient, objectType, properties) => {
+const createPipelinesProperties = async (hubspotClient, objectType, properties) => {
     return await Promise.all(
         properties.map(
             async (property) => {
@@ -101,5 +101,5 @@ module.exports = {
     saveGroups: createGroups,
     createClient,
     getPipelines,
-    createPipelines,
+    createPipelinesProperties,
 }

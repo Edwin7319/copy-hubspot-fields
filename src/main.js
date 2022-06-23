@@ -1,5 +1,5 @@
 const {API_KEY_PRINCIPAL, API_KEY_SECONDARY} = require('./constants/config')
-const {getGroups, getProperties, saveGroups, saveProperties, createClient, getPipelines} = require('./husbpot/api-client')
+const {getGroups, getProperties, saveGroups, saveProperties, createClient, getPipelines, createPipelinesProperties} = require('./husbpot/api-client')
 const {getDifferenceBetweenArrays, prepareGroupToSave, preparePropertiesToSave, removeHubspotDefaultFields} = require('./helper/hubspot-helper')
 
 const hubspotClientPrincipal = createClient(API_KEY_PRINCIPAL)
@@ -11,7 +11,7 @@ const createGroups = async (objectType) => {
     const uniqueFields = getDifferenceBetweenArrays(groupsSecondary, groupsPrincipal, 'name')
     const cleanedUniqueFields = removeHubspotDefaultFields(uniqueFields)
     const fieldsToSave = prepareGroupToSave(cleanedUniqueFields)
-    return await saveGroups(hubspotClientSecondary, objectType, fieldsToSave)
+    return saveGroups(hubspotClientSecondary, objectType, fieldsToSave)
 }
 
 const createProperties = async (objectType) => {
@@ -20,36 +20,34 @@ const createProperties = async (objectType) => {
     const uniqueFields = getDifferenceBetweenArrays(contactFieldsSecondary, contactFieldsPrincipal, 'name')
     const cleanedUniqueFields = removeHubspotDefaultFields(uniqueFields)
     const fieldsToSave = preparePropertiesToSave(cleanedUniqueFields)
-    return await saveProperties(hubspotClientSecondary, objectType, fieldsToSave)
+    console.log(fieldsToSave)
+    return saveProperties(hubspotClientSecondary, objectType, fieldsToSave)
 }
 
 const createPipelines = async () => {
-    return await getPipelines(hubspotClientPrincipal, 'deals')
+    const resp = await getPipelines(hubspotClientPrincipal, 'deals')
+    await createPipelinesProperties(hubspotClientSecondary, 'deals', resp)
 }
 
 
 const createContactGroups = async () => {
     const contactsObjectType = "contacts";
-    const groups = await createGroups(contactsObjectType)
-    console.log(groups)
+    await createGroups(contactsObjectType)
 }
 
 const createContactProperties = async () => {
     const contactsObjectType = "contacts";
-    const properties = await createProperties(contactsObjectType)
-    console.log(properties)
+    await createProperties(contactsObjectType)
 }
 
 const createDealGroups = async () => {
     const contactsObjectType = "deals";
-    const groups = await createGroups(contactsObjectType)
-    console.log(groups)
+    await createGroups(contactsObjectType)
 }
 
 const createDealProperties = async () => {
     const contactsObjectType = "deals";
-    const properties = await createProperties(contactsObjectType)
-    console.log(properties)
+   await createProperties(contactsObjectType)
 }
 
 
